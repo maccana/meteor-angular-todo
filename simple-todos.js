@@ -2,13 +2,15 @@ Tasks = new Mongo.Collection("tasks");
 
 if (Meteor.isClient) {
   // This code only runs on the client
+
+  // Find all todos
   Template.body.helpers({
     tasks: function () {
        // Show newest tasks first
     return Tasks.find({}, {sort: {createdAt: -1}});
     }
   });
-
+  // Insert new todo to database
   Template.body.events({
     "submit .new-task": function (event) {
       // This function is called when the new task form is submitted
@@ -26,6 +28,17 @@ if (Meteor.isClient) {
 
       // Prevent default form submit
       return false; // Prevents page refresh
+    }
+  });
+
+  // Toggle checked and delete todos
+  Template.task.events({
+    "click .toggle-checked": function () {
+      // Set the checked property to the opposite of its current value
+      Tasks.update(this._id, {$set: {checked: ! this.checked}});
+    },
+    "click .delete": function () {
+      Tasks.remove(this._id);
     }
   });
 }

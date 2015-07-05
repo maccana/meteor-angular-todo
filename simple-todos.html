@@ -17,11 +17,17 @@
         {{> task}}
       {{/each}}
     </ul>
-    
+
   </div>
 </body>
 
 <template name="task">
-  <li>{{text}}</li>
+  <li class="{{#if checked}}checked{{/if}}">
+    <button class="delete">&times;</button>
+    <!--  box is unchecked = false -->    
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+    <span class="text">{{text}}</span>
+  </li>
 </template>
 
