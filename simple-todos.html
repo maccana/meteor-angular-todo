@@ -7,6 +7,10 @@
   <div class="container">
 	<header>
 	  <h1>Todo List</h1>
+    <label class="hide-completed">
+      <input type="checkbox" checked="{{hideCompleted}}" />
+      Hide Completed Tasks
+    </label>
 	  <form class="new-task">
 	    <input type="text" name="text" placeholder="Type to add new tasks.Hit enter when finished." />
 	  </form>
@@ -26,8 +30,12 @@
     <button class="delete">&times;</button>
     <!--  box is unchecked = false -->    
     <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+    {{#if isLink}}
+      <a href="{{text}}"> {{text}}</a>
+      {{else}}
+      <span class="text">{{text}}</span>
+    {{/if}}  
 
-    <span class="text">{{text}}</span>
   </li>
 </template>
 
