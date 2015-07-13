@@ -23,22 +23,16 @@ if (Meteor.isClient) {
   Template.body.events({
     "submit .new-task": function (event) {
       // This function is called when the new task form is submitted
-
       var text = event.target.text.value;
-
-
       Meteor.call("addTask", text);
-
       // Clear form
       event.target.text.value = "";
-
       // Prevent default form submit
       return false; // Prevents page refresh
     },
     "change .hide-completed input": function (event) {
       Session.set("hideCompleted", event.target.checked);
     }
-
   });
 
   // Toggle checked and delete todos
@@ -68,14 +62,14 @@ if (Meteor.isClient) {
 }
 
 // Database logic separated from client code for more security
-// Also methods can be called from anywhere in app
+// Methods can be called from anywhere in app
 Meteor.methods({
   addTask: function (text) {
     // Make sure the user is logged in before inserting a task
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-
+    // Create new task object
     Tasks.insert({
       text: text,
       createdAt: new Date(),
@@ -96,7 +90,7 @@ Meteor.methods({
     if (task.owner !== Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-
+    // Update task object to be private
     Tasks.update(taskId, { $set: { private: setToPrivate } });
   }
 });
@@ -104,15 +98,13 @@ Meteor.methods({
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
-
     Meteor.publish("tasks", function () {
-    return Tasks.find( {
-      $or: [
-        { private: {$ne: true} }, // check if private property is not equal to true
-        { owner: this.userId }
-      ]
+      return Tasks.find( {
+        $or: [
+          { private: {$ne: true} }, // check if private property is not equal to true
+          { owner: this.userId }
+        ]
+      });
     });
-
-  });
   });
 }

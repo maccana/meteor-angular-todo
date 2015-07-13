@@ -32,6 +32,8 @@
 
 <template name="task">
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
+
+
     <button class="delete">&times;</button>
     <!--  box is unchecked = false -->    
     <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
@@ -48,6 +50,7 @@
   {{/if}}
 
     {{#if isLink}}
+
       <a href="{{text}}"> {{text}}</a>
       {{else}}
       <span class="text"><strong>{{username}}</strong> - {{text}}</span>
