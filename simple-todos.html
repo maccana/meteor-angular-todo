@@ -34,12 +34,12 @@
   <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
 
 
+  {{#if isOwner}}
     <button class="delete">&times;</button>
     <!--  box is unchecked = false -->    
     <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
 
 
-  {{#if isOwner}}
   <button class="toggle-private">
     {{#if private}}
       Make Public
